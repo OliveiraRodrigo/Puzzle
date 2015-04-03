@@ -20,7 +20,7 @@ public class Puzzle implements Runnable {
         numRows = 3;
         numCols = 3; //digitar quantidades em campos na tela
                      //minimos 2, cada
-        //numPieces = numRows * numCols;
+        numPieces = numRows * numCols;
                      //a peca zero sera a posicao vazia
         
         puzzle = new int[numRows][numCols];
@@ -40,8 +40,34 @@ public class Puzzle implements Runnable {
         return puzzle;
     }
     
+    public boolean isValid(){
+        int count = 0;
+        for(int p=0; p<numPieces-1; p++){
+            if(pieces.get(p) != 0){
+                for(int q=p+1; q<numPieces; q++){
+                    if(pieces.get(q) != 0){
+                        if(pieces.get(q) < pieces.get(p)){
+                            count++;
+                        }
+                    }
+                }
+            }
+        }
+        if(count%2 == 0){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    
     public void shufflePuzzle(){
-        Collections.shuffle(pieces);
+        
+        do{
+            Collections.shuffle(pieces);
+        }
+        while(!isValid());
+        
         int p = 0;
         for(int r=0; r<numRows; r++){
             for(int c=0; c<numCols; c++){
@@ -127,21 +153,17 @@ public class Puzzle implements Runnable {
     public void run() {
         
         setPuzzle();
-        printPuzzle();
+        //printPuzzle();
+        //System.out.println();
         shufflePuzzle();
-        System.out.println("");
         printPuzzle();
-        System.out.println("");
-    /*    
-        System.out.println(
-                "{"+getFreePosition()[0]+
-                ","+getFreePosition()[1]+"}"
-        );
-    */    
-        System.out.println(move("up"));
-        System.out.println(move("left"));
-        System.out.println(move("down"));
-        System.out.println(move("right"));
+        System.out.println();
+        System.out.print(move("up")+" - ");
+        System.out.print(move("left")+" - ");
+        System.out.print(move("down")+" - ");
+        System.out.print(move("right"));
+        System.out.println();
+        System.out.println();
         printPuzzle();
     }
     
