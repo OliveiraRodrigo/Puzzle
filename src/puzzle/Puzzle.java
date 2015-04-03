@@ -39,18 +39,18 @@ public class Puzzle implements Runnable {
                 puzzle[r][c] = pieces.get(p);
                 p++;
                 if(puzzle[r][c] == 0){
-                    if(numPieces>10){
-                        System.out.print(" ");
-                    }
+                    //if(numPieces>10){
+                    //    System.out.print(" ");
+                    //}
                     System.out.print("   ");
                 }
                 else{
-                    if(numPieces>10 && puzzle[r][c]<10){
-                        System.out.print("[0" + puzzle[r][c] + "]");
-                    }
-                    else{
+                    //if(numPieces>10 && puzzle[r][c]<10){
+                    //    System.out.print("[0" + puzzle[r][c] + "]");
+                    //}
+                    //else{
                         System.out.print("[" + puzzle[r][c] + "]");
-                    }
+                    //}
                 }
             }
             System.out.println();
