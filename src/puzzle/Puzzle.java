@@ -17,19 +17,22 @@ public class Puzzle implements Runnable {
     
     public void setPuzzle(){
         
-        int p;
         numRows = 3;
-        numCols = 3;
-        //digitar quantidades em campos na tela
-        //minimos 2, cada
-        numPieces = numRows * numCols;
-        //a peca zero sera a posicao vazia
+        numCols = 3; //digitar quantidades em campos na tela
+                     //minimos 2, cada
+        //numPieces = numRows * numCols;
+                     //a peca zero sera a posicao vazia
         
         puzzle = new int[numRows][numCols];
         pieces = new ArrayList<>();
         
-        for(p=0; p<numPieces; p++){
-            pieces.add(p);
+        int p = 0;
+        for(int r=0; r<numRows; r++){
+            for(int c=0; c<numCols; c++){
+                pieces.add(p);
+                puzzle[r][c] = pieces.get(p);
+                p++;
+            }
         }
     }
     
@@ -37,16 +40,23 @@ public class Puzzle implements Runnable {
         return puzzle;
     }
     
-    public void shufflePieces(){
+    public void shufflePuzzle(){
         Collections.shuffle(pieces);
+        int p = 0;
+        for(int r=0; r<numRows; r++){
+            for(int c=0; c<numCols; c++){
+                puzzle[r][c] = pieces.get(p);
+                p++;
+            }
+        }
     }
     
     public void printPuzzle(){
         int p = 0;
         for(int r=0; r<numRows; r++){
             for(int c=0; c<numCols; c++){
-                puzzle[r][c] = pieces.get(p);
-                p++;
+                //puzzle[r][c] = pieces.get(p);
+                //p++;
                 if(puzzle[r][c] == 0){
                     System.out.print("   ");
                 }
@@ -74,19 +84,65 @@ public class Puzzle implements Runnable {
         return freePosition;
     }
     
+    public boolean move(String direction){
+        int r, c;
+        r = getFreePosition()[0];
+        c = getFreePosition()[1];
+        switch (direction){
+            
+            case "up":
+                if(r+1 < numRows){
+                    puzzle[r]  [c] = puzzle[r+1][c];
+                    puzzle[r+1][c] = 0;
+                    return true;
+                }
+                return false;
+            case "down":
+                if(r-1 >= 0){
+                    puzzle[r]  [c] = puzzle[r-1][c];
+                    puzzle[r-1][c] = 0;
+                    return true;
+                }
+                return false;
+            case "left":
+                if(c+1 < numCols){
+                    puzzle[r][c]   = puzzle[r][c+1];
+                    puzzle[r][c+1] = 0;
+                    return true;
+                }
+                return false;
+            case "right":
+                if(c-1 >= 0){
+                    puzzle[r][c]   = puzzle[r][c-1];
+                    puzzle[r][c-1] = 0;
+                    return true;
+                }
+                return false;
+            default:
+                return false;
+        }
+    }
+    
     @Override
     public void run() {
         
         setPuzzle();
         printPuzzle();
-        shufflePieces();
+        shufflePuzzle();
         System.out.println("");
         printPuzzle();
         System.out.println("");
+    /*    
         System.out.println(
                 "{"+getFreePosition()[0]+
                 ","+getFreePosition()[1]+"}"
         );
+    */    
+        System.out.println(move("up"));
+        System.out.println(move("left"));
+        System.out.println(move("down"));
+        System.out.println(move("right"));
+        printPuzzle();
     }
     
 }
