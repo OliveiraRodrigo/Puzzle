@@ -11,13 +11,13 @@ public class Puzzle implements Runnable {
     
     private int numRows;
     private int numCols;
+    private int numPieces;
     private int puzzle[][];
     private ArrayList<Integer> pieces;
     
     public void setPuzzle(){
         
-        int numPieces, p;
-        
+        int p;
         numRows = 3;
         numCols = 3;
         //digitar quantidades em campos na tela
@@ -31,26 +31,27 @@ public class Puzzle implements Runnable {
         for(p=0; p<numPieces; p++){
             pieces.add(p);
         }
+    }
+    
+    public int[][] getPuzzle(){
+        return puzzle;
+    }
+    
+    public void shufflePieces(){
         Collections.shuffle(pieces);
-        
-        p = 0;
+    }
+    
+    public void printPuzzle(){
+        int p = 0;
         for(int r=0; r<numRows; r++){
             for(int c=0; c<numCols; c++){
                 puzzle[r][c] = pieces.get(p);
                 p++;
                 if(puzzle[r][c] == 0){
-                    //if(numPieces>10){
-                    //    System.out.print(" ");
-                    //}
                     System.out.print("   ");
                 }
                 else{
-                    //if(numPieces>10 && puzzle[r][c]<10){
-                    //    System.out.print("[0" + puzzle[r][c] + "]");
-                    //}
-                    //else{
-                        System.out.print("[" + puzzle[r][c] + "]");
-                    //}
+                    System.out.print("[" + puzzle[r][c] + "]");
                 }
             }
             System.out.println();
@@ -61,6 +62,10 @@ public class Puzzle implements Runnable {
     public void run() {
         
         setPuzzle();
+        printPuzzle();
+        shufflePieces();
+        System.out.println("");
+        printPuzzle();
     }
     
 }
