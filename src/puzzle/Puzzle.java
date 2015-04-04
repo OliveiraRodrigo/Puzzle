@@ -7,7 +7,7 @@ import java.util.Collections;
  *
  * @author Rodrigo
  */
-public class Puzzle implements Runnable {
+public class Puzzle {
     
     private int numRows;
     private int numCols;
@@ -15,13 +15,14 @@ public class Puzzle implements Runnable {
     private int puzzle[][];
     private ArrayList<Integer> pieces;
     
-    public void setPuzzle(){
+    public void setPuzzle(int rows, int cols){
         
-        numRows = 3;
-        numCols = 3; //digitar quantidades em campos na tela
-                     //minimos 2, cada
+        numRows = rows;
+        numCols = cols;
+                    //digitar quantidades em campos na tela
+                    //minimos 2, cada
         numPieces = numRows * numCols;
-                     //a peca zero sera a posicao vazia
+                    //a peca zero sera a posicao vazia
         
         puzzle = new int[numRows][numCols];
         pieces = new ArrayList<>();
@@ -147,24 +148,6 @@ public class Puzzle implements Runnable {
             default:
                 return false;
         }
-    }
-    
-    @Override
-    public void run() {
-        
-        setPuzzle();
-        //printPuzzle();
-        //System.out.println();
-        shufflePuzzle();
-        printPuzzle();
-        System.out.println();
-        System.out.print(move("up")+" - ");
-        System.out.print(move("left")+" - ");
-        System.out.print(move("down")+" - ");
-        System.out.print(move("right"));
-        System.out.println();
-        System.out.println();
-        printPuzzle();
     }
     
 }

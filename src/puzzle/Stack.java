@@ -7,10 +7,9 @@ import java.util.ArrayList;
  * @author Rodrigo
  */
 public class Stack {
-    //private int[] stack_;
+    
     private final ArrayList<String> stack;
     private int stPointer;
-    //private String direction_;
     
     public Stack(){
         stPointer = 0;
