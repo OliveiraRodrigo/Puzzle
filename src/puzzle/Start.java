@@ -11,8 +11,9 @@ public class Start {
      */
     public static void main(String[] args) {
         
+        //Testes:
         Puzzle puzzle8 = new Puzzle();
-        puzzle8.setPuzzle(3,3);
+        puzzle8.setPuzzle(3, 3);
         //printPuzzle();
         //System.out.println();
         puzzle8.shufflePuzzle();
