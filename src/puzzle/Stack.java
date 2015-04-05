@@ -31,6 +31,13 @@ public class Stack {
             stPointer--;
             return direction;
         }
-        return "empty";
+        return stack.get(0);
+    }
+    
+    public boolean isEmpty(){
+        if(stPointer == 0){
+            return true;
+        }
+        return false;
     }
 }
