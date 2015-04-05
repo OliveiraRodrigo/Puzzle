@@ -41,6 +41,16 @@ public class Puzzle {
         return puzzle;
     }
     
+    public int[][] clonePuzzle(){
+        int[][] clone = new int[numRows][numCols];
+        for(int r=0; r<numRows; r++){
+            for(int c=0; c<numCols; c++){
+                clone[r][c] = puzzle[r][c];
+            }
+        }
+        return clone;
+    }
+    
     public boolean isValid(){
         int count = 0;
         for(int p=0; p<numPieces-1; p++){
