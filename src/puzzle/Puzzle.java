@@ -160,4 +160,14 @@ public class Puzzle {
         }
     }
     
+    public boolean[] move(String[] directions){
+        int size;
+        size = directions.length;
+        boolean effected[] = new boolean[size];
+        int i = 0;
+        while(i < size){
+            effected[i] = move(directions[i]);
+        }
+        return effected;
+    }
 }
