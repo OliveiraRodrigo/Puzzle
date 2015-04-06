@@ -6,18 +6,23 @@ package puzzle;
  */
 public class Tree implements Runnable {
     
-    Puzzle goalPuzzle;
-    Puzzle aPuzzle;
-    Stack aStack;
+    Puzzle   initPuzzle;
+    Puzzle   currPuzzle;
+    Puzzle   goalPuzzle;
+    Stack    aStack;
     String[] directions;
     
     public void Tree(int rows, int cols){
         
+        initPuzzle = new Puzzle();
+        initPuzzle.setPuzzle(rows, cols);
+        initPuzzle.shufflePuzzle();
+        
+        currPuzzle = initPuzzle.clonePuzzle();
+        
         goalPuzzle = new Puzzle();
         goalPuzzle.setPuzzle(rows, cols);
-        aPuzzle = new Puzzle();
-        aPuzzle.setPuzzle(rows, cols);
-        aPuzzle.shufflePuzzle();
+        
         aStack = new Stack();
         directions = new String[]{
             "up",   //0
@@ -29,18 +34,18 @@ public class Tree implements Runnable {
     
     public boolean depthSearch(int maxDepth){
         
-        if(aPuzzle.equals(goalPuzzle)){
+        if(currPuzzle.equals(goalPuzzle)){
             return true;
         }
         for(int d=0; d<4; d++){
-            while(aPuzzle.move(directions[d])){
+            while(currPuzzle.move(directions[d])){
                 aStack.push(directions[d]);
-                if(aPuzzle.equals(goalPuzzle)){
+                if(currPuzzle.equals(goalPuzzle)){
                     return true;
                 }
             }
             if(!"empty".equals(aStack.pop())){
-                aPuzzle.move(directions[3-d]);//inverse move
+                currPuzzle.move(directions[3-d]);//inverse move
             }
         }
         return false;

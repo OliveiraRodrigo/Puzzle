@@ -41,11 +41,13 @@ public class Puzzle {
         return puzzle;
     }
     
-    public int[][] clonePuzzle(){
-        int[][] clone = new int[numRows][numCols];
+    public Puzzle clonePuzzle(){
+        Puzzle clone = new Puzzle();
+        clone.setPuzzle(numRows, numCols);
+        int[][] copy = new int[numRows][numCols];
         for(int r=0; r<numRows; r++){
             for(int c=0; c<numCols; c++){
-                clone[r][c] = puzzle[r][c];
+                copy[r][c] = puzzle[r][c];
             }
         }
         return clone;
