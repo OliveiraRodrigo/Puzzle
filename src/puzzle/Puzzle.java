@@ -162,13 +162,13 @@ public class Puzzle {
         }
     }
     
-    public boolean[] move(String[] directions){
+    public boolean[] move(/*String[]*/ArrayList<String> directions){
         int size;
-        size = directions.length;
+        size = directions.size()/*.length*/;
         boolean effected[] = new boolean[size];
         int i = 0;
         while(i < size){
-            effected[i] = move(directions[i]);
+            effected[i] = move(directions.get(i)/*[i]*/);
         }
         return effected;
     }

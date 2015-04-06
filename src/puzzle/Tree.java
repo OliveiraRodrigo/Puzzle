@@ -1,6 +1,7 @@
 package puzzle;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  *
@@ -13,6 +14,7 @@ public class Tree implements Runnable {
     Puzzle   goalPuzzle;
     Stack    aStack;
     Queue    aQueue;
+    //ArrayList<String[]> directions;
     String[] directions;
     
     public void Tree(int rows, int cols){
@@ -28,6 +30,10 @@ public class Tree implements Runnable {
         
         aStack = new Stack();
         aQueue = new Queue();
+        /*directions.add(new String[]{"up"});
+        directions.add(new String[]{"left"});
+        directions.add(new String[]{"right"});
+        directions.add(new String[]{"down"});*/
         directions = new String[]{
             "up",   //0
             "left", //1
@@ -36,7 +42,7 @@ public class Tree implements Runnable {
         };
     }
     
-    public boolean depthSearch(int maxDepth){
+    /*public boolean depthSearch(int maxDepth){
         
         if(currPuzzle.equals(goalPuzzle)){
             return true;
@@ -53,45 +59,49 @@ public class Tree implements Runnable {
             }
         }
         return false;
-    }
+    }*/
     
-    /*public String[] breadthSearch(){
-        /*
+    public ArrayList<String> breadthSearch(){
+        
         //ArrayList<boolean[]> effected = new ArrayList<>();
         //ArrayList<String []> solution = new ArrayList<>();
-        String[] path;
+        ArrayList<String> path = new ArrayList<>();
         
+        //path.addAll(Arrays.asList(directions));
         for(int d=0; d<4; d++){
-            aQueue.enqueue(new String[]{directions[d]});
+            path.add(directions[d]);
+            aQueue.enqueue(path);
+            path.remove(d);
+            //aQueue.enqueue(new String{directions[d]});
         }
         while (!currPuzzle.equals(goalPuzzle)
             && !aQueue.isEmpty()){
             
-            //solution.add(aQueue.dequeue());
-            path = new String[1];
             path = aQueue.dequeue();
-            if(solution.size()>0){
+            if(path.size()>0){
                 //effected.addAll(0, currPuzzle.move(solution.get(solution.size()-1)));
-                /*effected.add(*//*
-                currPuzzle.move(solution.get(solution.size()-1))/*)*//*;
+                /*effected.add(*/
+                //currPuzzle.move(path.get(path.size()-1))/*)*/;
+                currPuzzle.move(path)/*)*/;
                 if(currPuzzle.equals(goalPuzzle)){
-                    return solution.get(solution.size()-1);
+                    //return path.get(path.size()-1);
+                    return path;
                 }
                 else{
                     //for(int d=0; d<4; d++){
-                        solution.add(directions);
-                        aQueue.enqueue(solution);
+                        path.addAll(Arrays.asList(directions));
+                        aQueue.enqueue(path);
                     //}
                     currPuzzle = initPuzzle.clonePuzzle();
                 }
             }
-            else{//solution == 0
+            else{//path.size() == 0
                 
             }
         }
         //return false;
-        return new String[]{"qq"};
-    }*/
+        return path;
+    }
     
     @Override
     public void run() {

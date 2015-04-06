@@ -30,7 +30,7 @@ public class Queue {
     }
     
     public /*String[]*/ArrayList<String> dequeue(){
-        /*String[]*/ArrayList<String> directions = new ArrayList();
+        /*String[]*/ArrayList<String> directions = new ArrayList<>();
         //directions = queue.get(0);
         directions.addAll(Arrays.asList(queue.get(1)));
         if(qLast > 0){
