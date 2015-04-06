@@ -14,7 +14,7 @@ public class Start {
     public static void main(String[] args) {
         
         //Testes:
-        Puzzle puzzle8 = new Puzzle();
+        /*Puzzle puzzle8 = new Puzzle();
         puzzle8.setPuzzle(3, 3);
         //printPuzzle();
         //System.out.println();
@@ -27,7 +27,7 @@ public class Start {
         System.out.print(puzzle8.move("right"));
         System.out.println();
         System.out.println();
-        puzzle8.printPuzzle();
+        puzzle8.printPuzzle();*/
         
         //String[] path = new String[]{"up","left","right","down"};
         //ArrayList<String> path = new ArrayList();
@@ -42,6 +42,12 @@ public class Start {
         //System.out.println("#"+path+"#");
         //System.out.println("$"+saida.get(0)+"$");
         //System.out.println("#"+saida+"#");
+        
+        Tree tree = new Tree();
+        System.out.println("asdf");
+        System.out.println(
+                tree.breadthSearch()
+        );
         
         //Tree runnable = new Tree();
         //Thread thread1 = new Thread(runnable);

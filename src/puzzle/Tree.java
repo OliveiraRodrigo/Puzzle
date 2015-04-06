@@ -39,7 +39,7 @@ public class Tree implements Runnable {
             "left", //1
             "right",//2
             "down"  //3
-        };
+        };        
     }
     
     /*public boolean depthSearch(int maxDepth){
@@ -64,34 +64,45 @@ public class Tree implements Runnable {
     public ArrayList<String> breadthSearch(){
         
         //ArrayList<boolean[]> effected = new ArrayList<>();
-        //ArrayList<String []> solution = new ArrayList<>();
+        boolean[] effected;
         ArrayList<String> path = new ArrayList<>();
         
         //path.addAll(Arrays.asList(directions));
         for(int d=0; d<4; d++){
+            //System.out.println(d);
+            //System.out.println(directions[d]);
             path.add(directions[d]);
             aQueue.enqueue(path);
             path.remove(d);
-            //aQueue.enqueue(new String{directions[d]});
+            //aQueue.enqueue(new String[]{directions[d]});
         }
         while (!currPuzzle.equals(goalPuzzle)
             && !aQueue.isEmpty()){
             
             path = aQueue.dequeue();
+            System.out.println(path);
             if(path.size()>0){
                 //effected.addAll(0, currPuzzle.move(solution.get(solution.size()-1)));
                 /*effected.add(*/
                 //currPuzzle.move(path.get(path.size()-1))/*)*/;
-                currPuzzle.move(path)/*)*/;
+                //effected = new boolean[path.size()];
+                effected = currPuzzle.move(path)/*)*/; //.clone() ???
                 if(currPuzzle.equals(goalPuzzle)){
                     //return path.get(path.size()-1);
                     return path;
                 }
                 else{
-                    //for(int d=0; d<4; d++){
-                        path.addAll(Arrays.asList(directions));
-                        aQueue.enqueue(path);
-                    //}
+                    for(int d=0; d<path.size(); d++){
+                        if(!effected[d])
+                            path.remove(d);
+                    }
+                    for(int d=0; d<4; d++){
+                        if(!path.get(path.size()-1).equals(directions[3-d])){
+                            path.add(directions[d]);
+                            aQueue.enqueue(path);
+                            path.remove(path.size()-1);
+                        }
+                    }
                     currPuzzle = initPuzzle.clonePuzzle();
                 }
             }
