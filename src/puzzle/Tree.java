@@ -55,10 +55,11 @@ public class Tree implements Runnable {
         return false;
     }
     
-    public String[] breadthSearch(){
-        
-        ArrayList<boolean[]> effected = new ArrayList<>();
-        ArrayList<String []> solution = new ArrayList<>();
+    /*public String[] breadthSearch(){
+        /*
+        //ArrayList<boolean[]> effected = new ArrayList<>();
+        //ArrayList<String []> solution = new ArrayList<>();
+        String[] path;
         
         for(int d=0; d<4; d++){
             aQueue.enqueue(new String[]{directions[d]});
@@ -66,10 +67,13 @@ public class Tree implements Runnable {
         while (!currPuzzle.equals(goalPuzzle)
             && !aQueue.isEmpty()){
             
-            solution.add(aQueue.dequeue());
+            //solution.add(aQueue.dequeue());
+            path = new String[1];
+            path = aQueue.dequeue();
             if(solution.size()>0){
                 //effected.addAll(0, currPuzzle.move(solution.get(solution.size()-1)));
-                effected.add(currPuzzle.move(solution.get(solution.size()-1)));
+                /*effected.add(*//*
+                currPuzzle.move(solution.get(solution.size()-1))/*)*//*;
                 if(currPuzzle.equals(goalPuzzle)){
                     return solution.get(solution.size()-1);
                 }
@@ -86,7 +90,8 @@ public class Tree implements Runnable {
             }
         }
         //return false;
-    }
+        return new String[]{"qq"};
+    }*/
     
     @Override
     public void run() {

@@ -1,5 +1,7 @@
 package puzzle;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 /**
  *
  * @author Rodrigo
@@ -26,6 +28,20 @@ public class Start {
         System.out.println();
         System.out.println();
         puzzle8.printPuzzle();
+        
+        //String[] path = new String[]{"up","left","right","down"};
+        //ArrayList<String> path = new ArrayList();
+        //path.add("up");path.add("left");path.add("right");path.add("down");
+        //ArrayList<String> saida/* = new ArrayList()*/;
+        //Queue fila = new Queue();
+        //fila.enqueue(path);
+        //saida = fila.dequeue();
+        //System.out.println("$"+path[0]+"$");
+        //System.out.println("#"+Arrays.toString(path)+"#");
+        //System.out.println("$"+path.get(0)+"$");
+        //System.out.println("#"+path+"#");
+        //System.out.println("$"+saida.get(0)+"$");
+        //System.out.println("#"+saida+"#");
         
         //Tree runnable = new Tree();
         //Thread thread1 = new Thread(runnable);
