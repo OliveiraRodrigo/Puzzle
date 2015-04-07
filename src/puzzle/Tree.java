@@ -14,10 +14,10 @@ public class Tree implements Runnable {
     Puzzle   goalPuzzle;
     Stack    aStack;
     Queue    aQueue;
-    //ArrayList<String[]> directions;
-    String[] directions;
+    ArrayList<String> directions;
+    //String[] directions;
     
-    public void Tree(int rows, int cols){
+    public Tree(int rows, int cols){
         
         initPuzzle = new Puzzle();
         initPuzzle.setPuzzle(rows, cols);
@@ -30,16 +30,19 @@ public class Tree implements Runnable {
         
         aStack = new Stack();
         aQueue = new Queue();
-        /*directions.add(new String[]{"up"});
-        directions.add(new String[]{"left"});
-        directions.add(new String[]{"right"});
-        directions.add(new String[]{"down"});*/
-        directions = new String[]{
-            "up",   //0
-            "left", //1
-            "right",//2
-            "down"  //3
-        };        
+        directions = new ArrayList<>();
+        directions.add("up");
+        directions.add("left");
+        directions.add("right");
+        directions.add("down");
+        /*directions = new String[4];
+        directions[0] = "up";   //0
+        directions[1] = "left"; //1
+        directions[2] = "right";//2
+        directions[3] = "down";  //3*/
+        
+        currPuzzle.printPuzzle();
+        System.out.println();
     }
     
     /*public boolean depthSearch(int maxDepth){
@@ -69,18 +72,18 @@ public class Tree implements Runnable {
         
         //path.addAll(Arrays.asList(directions));
         for(int d=0; d<4; d++){
-            //System.out.println(d);
-            //System.out.println(directions[d]);
-            path.add(directions[d]);
+            path.add(directions.get(d));
             aQueue.enqueue(path);
-            path.remove(d);
+            path.remove(path.size()-1);
             //aQueue.enqueue(new String[]{directions[d]});
-        }
+        }int t=0;
         while (!currPuzzle.equals(goalPuzzle)
             && !aQueue.isEmpty()){
             
+            currPuzzle.printPuzzle();
+            System.out.println();
+            
             path = aQueue.dequeue();
-            System.out.println(path);
             if(path.size()>0){
                 //effected.addAll(0, currPuzzle.move(solution.get(solution.size()-1)));
                 /*effected.add(*/
@@ -97,10 +100,12 @@ public class Tree implements Runnable {
                             path.remove(d);
                     }
                     for(int d=0; d<4; d++){
-                        if(!path.get(path.size()-1).equals(directions[3-d])){
-                            path.add(directions[d]);
-                            aQueue.enqueue(path);
-                            path.remove(path.size()-1);
+                        if(path.size()>0){
+                            if(!path.get(path.size()-1).equals(directions.get(3-d))){
+                                path.add(directions.get(d));
+                                aQueue.enqueue(path);
+                                path.remove(path.size()-1);
+                            }
                         }
                     }
                     currPuzzle = initPuzzle.clonePuzzle();

@@ -43,8 +43,7 @@ public class Start {
         //System.out.println("$"+saida.get(0)+"$");
         //System.out.println("#"+saida+"#");
         
-        Tree tree = new Tree();
-        System.out.println("asdf");
+        Tree tree = new Tree(3, 3);
         System.out.println(
                 tree.breadthSearch()
         );
