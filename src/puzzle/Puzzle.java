@@ -51,8 +51,6 @@ public class Puzzle {
     
     public Puzzle clonePuzzle(){
         Puzzle clone = new Puzzle(numRows, numCols);
-        //clone.setPuzzle(numRows, numCols);
-        //int[][] copy = new int[numRows][numCols];
         for(int r=0; r<numRows; r++){
             for(int c=0; c<numCols; c++){
                 clone.puzzle[r][c] = puzzle[r][c];
@@ -186,10 +184,9 @@ public class Puzzle {
         }
     }
     
-    public boolean[] move(/*String[]*/ArrayList<String> directions){
+    public boolean[] move(ArrayList<String> directions){
         int size;
-        size = directions.size()/*.length*/;
-        //System.out.println("dir.size="+size+"=");
+        size = directions.size();
         boolean effected[] = new boolean[size];
         int i = 0;
         while(i < size){

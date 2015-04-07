@@ -66,26 +66,19 @@ public class Tree implements Runnable {
     
     public ArrayList<String> breadthSearch(){
         
-        //ArrayList<boolean[]> effected = new ArrayList<>();
         boolean[] effected;
         ArrayList<String> path = new ArrayList<>();
         
-        //path.addAll(Arrays.asList(directions));
         for(int d=0; d<4; d++){
             path.add(directions.get(d));
             aQueue.enqueue(path);
             path.remove(path.size()-1);
-            //aQueue.enqueue(new String[]{directions[d]});
         }
         //while (!currPuzzle.isEqual(goalPuzzle)
         while (!currPuzzle.isSorted()
             && !aQueue.isEmpty()){
             path = aQueue.dequeue();
             if(path.size()>0){
-                //effected.addAll(0, currPuzzle.move(solution.get(solution.size()-1)));
-                /*effected.add(*/
-                //currPuzzle.move(path.get(path.size()-1))/*)*/;
-                //effected = new boolean[path.size()];
                 effected = currPuzzle.move(path)/*)*/; //.clone() ???
                 
                 System.out.println(path);
@@ -94,16 +87,15 @@ public class Tree implements Runnable {
             
                 //if(currPuzzle.isEqual(goalPuzzle)){
                 if(currPuzzle.isSorted()){
-                    //return path.get(path.size()-1);
                     System.out.println("oooopaaaaa");
                     currPuzzle.printPuzzle();
                     return path;
                 }
                 else{
-                    //for(int d=0; d<path.size(); d++){
-                    //    if(!effected[d])
-                    //        path.remove(d);
-                    //}
+                    for(int d=0; d<path.size(); d++){
+                        if(!effected[d])
+                            path.remove(d);
+                    }
                     for(int d=0; d<4; d++){
                         if(path.size()>0){
                             if(!path.get(path.size()-1).equals(directions.get(3-d))){
@@ -117,11 +109,11 @@ public class Tree implements Runnable {
                 }
             }
             else{//path.size() == 0
-                for(int d=0; d<4; d++){
+                /*for(int d=0; d<4; d++){
                     path.add(directions.get(d));
                     aQueue.enqueue(path);
                     path.remove(path.size()-1);
-                }
+                }*/
             }
         }
         currPuzzle.printPuzzle();
