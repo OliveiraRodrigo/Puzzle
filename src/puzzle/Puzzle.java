@@ -9,13 +9,13 @@ import java.util.Collections;
  */
 public class Puzzle {
     
-    private int numRows;
-    private int numCols;
-    private int numPieces;
-    private int puzzle[][];
-    private ArrayList<Integer> pieces;
+    private final int numRows;
+    private final int numCols;
+    private final int numPieces;
+    private final int puzzle[][];
+    private final ArrayList<Integer> pieces;
     
-    public void setPuzzle(int rows, int cols){
+    public Puzzle(int rows, int cols){
         
         numRows = rows;
         numCols = cols;
@@ -37,13 +37,21 @@ public class Puzzle {
         }
     }
     
+    public int getNumRows(){
+        return numRows;
+    }
+    
+    public int getNumCols(){
+        return numCols;
+    }
+    
     public int[][] getPuzzle(){
-        return puzzle;
+        return puzzle.clone();
     }
     
     public Puzzle clonePuzzle(){
-        Puzzle clone = new Puzzle();
-        clone.setPuzzle(numRows, numCols);
+        Puzzle clone = new Puzzle(numRows, numCols);
+        //clone.setPuzzle(numRows, numCols);
         //int[][] copy = new int[numRows][numCols];
         for(int r=0; r<numRows; r++){
             for(int c=0; c<numCols; c++){
@@ -74,6 +82,25 @@ public class Puzzle {
         }
     }
     
+    public boolean isSorted(){
+        int[] array;
+        array = new int[numPieces+1];
+        array[0] = 0;
+        int i = 1;
+        for(int r=0; r<numRows; r++){
+            for(int c=0; c<numCols; c++){
+                if(puzzle[r][c] != 0){
+                    array[i] = puzzle[r][c];
+                    if(array[i] < array[i-1]){
+                        return false;
+                    }
+                    i++;
+                }
+            }
+        }
+        return true;
+    }
+    
     public void shufflePuzzle(){
         
         do{
@@ -91,11 +118,8 @@ public class Puzzle {
     }
     
     public void printPuzzle(){
-        int p = 0;
         for(int r=0; r<numRows; r++){
             for(int c=0; c<numCols; c++){
-                //puzzle[r][c] = pieces.get(p);
-                //p++;
                 if(puzzle[r][c] == 0){
                     System.out.print("   ");
                 }
@@ -170,9 +194,23 @@ public class Puzzle {
         int i = 0;
         while(i < size){
             effected[i] = move(directions.get(i)/*[i]*/);
-            //printPuzzle();
             i++;
         }
         return effected;
+    }
+    
+    public boolean isEqual(Puzzle test){
+        if(numRows == test.getNumRows() &&
+           numCols == test.getNumCols()){
+            for(int r=0; r<numRows; r++){
+                for(int c=0; c<numCols; c++){
+                    if(puzzle[r][c] != test.getPuzzle()[r][c]){
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+        return false;
     }
 }

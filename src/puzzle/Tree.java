@@ -19,14 +19,14 @@ public class Tree implements Runnable {
     
     public Tree(int rows, int cols){
         
-        initPuzzle = new Puzzle();
-        initPuzzle.setPuzzle(rows, cols);
+        initPuzzle = new Puzzle(rows, cols);
+        //initPuzzle.setPuzzle(rows, cols);
         initPuzzle.shufflePuzzle();
         
         currPuzzle = initPuzzle.clonePuzzle();
         
-        goalPuzzle = new Puzzle();
-        goalPuzzle.setPuzzle(rows, cols);
+        goalPuzzle = new Puzzle(rows, cols);
+        //goalPuzzle.setPuzzle(rows, cols);
         
         aStack = new Stack();
         aQueue = new Queue();
@@ -76,13 +76,10 @@ public class Tree implements Runnable {
             aQueue.enqueue(path);
             path.remove(path.size()-1);
             //aQueue.enqueue(new String[]{directions[d]});
-        }int t=0;
-        while (!currPuzzle.equals(goalPuzzle)
+        }
+        //while (!currPuzzle.isEqual(goalPuzzle)
+        while (!currPuzzle.isSorted()
             && !aQueue.isEmpty()){
-            
-            currPuzzle.printPuzzle();
-            System.out.println();
-            
             path = aQueue.dequeue();
             if(path.size()>0){
                 //effected.addAll(0, currPuzzle.move(solution.get(solution.size()-1)));
@@ -90,15 +87,23 @@ public class Tree implements Runnable {
                 //currPuzzle.move(path.get(path.size()-1))/*)*/;
                 //effected = new boolean[path.size()];
                 effected = currPuzzle.move(path)/*)*/; //.clone() ???
-                if(currPuzzle.equals(goalPuzzle)){
+                
+                System.out.println(path);
+                //currPuzzle.printPuzzle();
+                //System.out.println();
+            
+                //if(currPuzzle.isEqual(goalPuzzle)){
+                if(currPuzzle.isSorted()){
                     //return path.get(path.size()-1);
+                    System.out.println("oooopaaaaa");
+                    currPuzzle.printPuzzle();
                     return path;
                 }
                 else{
-                    for(int d=0; d<path.size(); d++){
-                        if(!effected[d])
-                            path.remove(d);
-                    }
+                    //for(int d=0; d<path.size(); d++){
+                    //    if(!effected[d])
+                    //        path.remove(d);
+                    //}
                     for(int d=0; d<4; d++){
                         if(path.size()>0){
                             if(!path.get(path.size()-1).equals(directions.get(3-d))){
@@ -112,9 +117,14 @@ public class Tree implements Runnable {
                 }
             }
             else{//path.size() == 0
-                
+                for(int d=0; d<4; d++){
+                    path.add(directions.get(d));
+                    aQueue.enqueue(path);
+                    path.remove(path.size()-1);
+                }
             }
         }
+        currPuzzle.printPuzzle();
         //return false;
         return path;
     }

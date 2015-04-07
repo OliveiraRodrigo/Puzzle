@@ -14,20 +14,23 @@ public class Start {
     public static void main(String[] args) {
         
         //Testes:
-        /*Puzzle puzzle8 = new Puzzle();
-        puzzle8.setPuzzle(3, 3);
-        //printPuzzle();
-        //System.out.println();
+        /*Puzzle puzzle8 = new Puzzle(3, 3);
+        Puzzle puzzle2 = new Puzzle(3, 3);
         puzzle8.shufflePuzzle();
         puzzle8.printPuzzle();
         System.out.println();
-        System.out.print(puzzle8.move("up")+" - ");
+        puzzle2.shufflePuzzle();
+        puzzle2.printPuzzle();
+        
+        System.out.println(puzzle8.isEqual(puzzle2));
+        */
+        /*System.out.print(puzzle8.move("up")+" - ");
         System.out.print(puzzle8.move("left")+" - ");
         System.out.print(puzzle8.move("down")+" - ");
         System.out.print(puzzle8.move("right"));
         System.out.println();
-        System.out.println();
-        puzzle8.printPuzzle();*/
+        System.out.println();*/
+        //puzzle8.printPuzzle();
         
         //String[] path = new String[]{"up","left","right","down"};
         //ArrayList<String> path = new ArrayList();
@@ -43,10 +46,12 @@ public class Start {
         //System.out.println("$"+saida.get(0)+"$");
         //System.out.println("#"+saida+"#");
         
-        Tree tree = new Tree(3, 3);
+        Tree tree = new Tree(2, 3);
         System.out.println(
                 tree.breadthSearch()
         );
+                
+        
         
         //Tree runnable = new Tree();
         //Thread thread1 = new Thread(runnable);
