@@ -15,9 +15,10 @@ public class Screen extends JFrame implements KeyListener {
     
     private BufferStrategy bs;
     private Color[][] matrix;
+    protected boolean next;
     //private Puzzle sPuzzle;
     
-    public Screen(Puzzle inPuzzle) {
+    public Screen() {
         
         //sPuzzle = inPuzzle.clonePuzzle();
         addKeyListener(this);
@@ -31,6 +32,7 @@ public class Screen extends JFrame implements KeyListener {
         this.setVisible(true);
     //    this.initialize();
         setIgnoreRepaint(true);
+        next = false;
     //}
     //
     ///** Inicializa a tela */
@@ -48,13 +50,19 @@ public class Screen extends JFrame implements KeyListener {
         g.clearRect(0, 0, getWidth(), getHeight());
         
         /** Grade do jogo */
-        int k=0;
+        Color numberColor;
+        if(qPuzzle.isSorted()){
+            numberColor = Color.BLACK;
+        }
+        else{
+            numberColor = Color.WHITE;
+        }
         for(int i=0; i<qPuzzle.getNumRows(); i++) {
             for(int j=0; j<qPuzzle.getNumCols(); j++) {
 
                 g.setColor(qPuzzle.showPuzzle()[i][j]);
                 g.fill3DRect((j*100)+100,(i*100)+100, 100, 100, true);
-                g.setColor(Color.WHITE);
+                g.setColor(Color.BLACK);
                 if(qPuzzle.puzzle[i][j] != 0){
                     g.drawString(Integer.toString(
                         qPuzzle.puzzle[i][j]),
@@ -107,6 +115,7 @@ public class Screen extends JFrame implements KeyListener {
                 break;
             case KeyEvent.VK_SPACE:
                 //jogo1.usaTrunfo();
+                next = true;
                 break;
             case KeyEvent.VK_T:
                 //jogo1.trollar();

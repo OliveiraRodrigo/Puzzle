@@ -131,6 +131,13 @@ public class Puzzle {
     }
     
     public Color[][] showPuzzle(){
+        Color boxColor;
+        if(this.isSorted()){
+            boxColor = Color.GREEN;
+        }
+        else{
+            boxColor = Color.BLUE;
+        }
         Color[][] matrix = new Color[numRows][numCols];
         for (int i=0; i<numRows; i++) {
             for (int j=0; j<numCols; j++) {
@@ -138,7 +145,7 @@ public class Puzzle {
                     matrix[i][j] = Color.BLACK;
                 }
                 else{
-                    matrix[i][j] = Color.BLUE;
+                    matrix[i][j] = boxColor;
                 }
             }
         }
