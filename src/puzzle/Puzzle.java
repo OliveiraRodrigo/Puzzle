@@ -145,34 +145,34 @@ public class Puzzle {
         return freePosition;
     }
     
-    public boolean move(String direction){
+    public boolean move(char direction){
         int r, c;
         r = getFreePosition()[0];
         c = getFreePosition()[1];
         switch (direction){
             
-            case "up":
+            case 'u':
                 if(r+1 < numRows){
                     puzzle[r]  [c] = puzzle[r+1][c];
                     puzzle[r+1][c] = 0;
                     return true;
                 }
                 return false;
-            case "down":
+            case 'd':
                 if(r-1 >= 0){
                     puzzle[r]  [c] = puzzle[r-1][c];
                     puzzle[r-1][c] = 0;
                     return true;
                 }
                 return false;
-            case "left":
+            case 'l':
                 if(c+1 < numCols){
                     puzzle[r][c]   = puzzle[r][c+1];
                     puzzle[r][c+1] = 0;
                     return true;
                 }
                 return false;
-            case "right":
+            case 'r':
                 if(c-1 >= 0){
                     puzzle[r][c]   = puzzle[r][c-1];
                     puzzle[r][c-1] = 0;
@@ -184,13 +184,13 @@ public class Puzzle {
         }
     }
     
-    public boolean[] move(ArrayList<String> directions){
+    public boolean[] move(ArrayList<Character> directions){
         int size;
         size = directions.size();
         boolean effected[] = new boolean[size];
         int i = 0;
         while(i < size){
-            effected[i] = move(directions.get(i)/*[i]*/);
+            effected[i] = move(directions.get(i));
             i++;
         }
         return effected;

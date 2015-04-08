@@ -8,23 +8,23 @@ import java.util.ArrayList;
  */
 public class Stack {
     
-    private final ArrayList<String> stack;
+    private final ArrayList<Character> stack;
     private int stPointer;
     
     public Stack(){
         stPointer = 0;
         stack = new ArrayList<>();
-        stack.add("empty");
+        stack.add(' ');
     }
     
-    public boolean push(String direction){
+    public boolean push(char direction){
         stPointer++;
         stack.add(direction);
         return true;
     }
     
-    public String pop(){
-        String direction;
+    public char pop(){
+        char direction;
         if(stPointer > 0){
             direction = stack.get(stPointer);
             stack.remove(stPointer);

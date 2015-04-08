@@ -14,7 +14,7 @@ public class Tree implements Runnable {
     Puzzle   goalPuzzle;
     Stack    aStack;
     Queue    aQueue;
-    ArrayList<String> directions;
+    ArrayList<Character> directions;
     
     public Tree(int rows, int cols){
         
@@ -28,10 +28,10 @@ public class Tree implements Runnable {
         aStack = new Stack();
         aQueue = new Queue();
         directions = new ArrayList<>();
-        directions.add("up");
-        directions.add("left");
-        directions.add("right");
-        directions.add("down");
+        directions.add('u');
+        directions.add('l');
+        directions.add('r');
+        directions.add('d');
         
         currPuzzle.printPuzzle();
         System.out.println();
@@ -56,10 +56,10 @@ public class Tree implements Runnable {
         return false;
     }*/
     
-    public ArrayList<String> breadthSearch(){
+    public ArrayList<Character> breadthSearch(){
         
         boolean[] effected;
-        ArrayList<String> path = new ArrayList<>();
+        ArrayList<Character> path = new ArrayList<>();
         
         double numTests = 0.0;
         double maxTests = 4.0;
@@ -80,7 +80,7 @@ public class Tree implements Runnable {
             
             effected = currPuzzle.move(path)/*)*/; //.clone() ???
             
-            //System.out.println(path);
+            System.out.println(path);
             //currPuzzle.printPuzzle();
             //System.out.println();
         

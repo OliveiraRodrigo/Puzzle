@@ -46,7 +46,7 @@ public class Start {
         //System.out.println("$"+saida.get(0)+"$");
         //System.out.println("#"+saida+"#");
         
-        Tree tree = new Tree(3, 3);
+        Tree tree = new Tree(2, 3);
         System.out.println(
                 tree.breadthSearch()
         );
