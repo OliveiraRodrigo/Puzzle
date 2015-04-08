@@ -98,7 +98,7 @@ public class Tree implements Runnable {
                 
                 
                 if(numTests >= maxTests){
-                    maxTests = Math.pow(4, exp++);
+                    maxTests = Math.pow(4, ++exp) - Math.pow(4, exp-1);
                     numTests = 0;
                     System.out.println(maxTests);
                 }
@@ -110,7 +110,8 @@ public class Tree implements Runnable {
                     if(path.size()>0){
                         if(!path.get(path.size()-1).equals(directions.get(3-d))){
                             path.add(directions.get(d));
-                            aQueue.enqueue(path);
+                            if(path.size() > exp)
+                                aQueue.enqueue(path);
                             path.remove(path.size()-1);
                         }
                     }
