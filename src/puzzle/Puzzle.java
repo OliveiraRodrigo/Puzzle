@@ -151,28 +151,28 @@ public class Puzzle {
         c = getFreePosition()[1];
         switch (direction){
             
-            case 'u':
+            case 'U':
                 if(r+1 < numRows){
                     puzzle[r]  [c] = puzzle[r+1][c];
                     puzzle[r+1][c] = 0;
                     return true;
                 }
                 return false;
-            case 'd':
+            case 'D':
                 if(r-1 >= 0){
                     puzzle[r]  [c] = puzzle[r-1][c];
                     puzzle[r-1][c] = 0;
                     return true;
                 }
                 return false;
-            case 'l':
+            case 'L':
                 if(c+1 < numCols){
                     puzzle[r][c]   = puzzle[r][c+1];
                     puzzle[r][c+1] = 0;
                     return true;
                 }
                 return false;
-            case 'r':
+            case 'R':
                 if(c-1 >= 0){
                     puzzle[r][c]   = puzzle[r][c-1];
                     puzzle[r][c-1] = 0;
