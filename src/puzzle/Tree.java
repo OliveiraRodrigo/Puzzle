@@ -15,18 +15,15 @@ public class Tree implements Runnable {
     Stack    aStack;
     Queue    aQueue;
     ArrayList<String> directions;
-    //String[] directions;
     
     public Tree(int rows, int cols){
         
         initPuzzle = new Puzzle(rows, cols);
-        //initPuzzle.setPuzzle(rows, cols);
         initPuzzle.shufflePuzzle();
         
         currPuzzle = initPuzzle.clonePuzzle();
         
         goalPuzzle = new Puzzle(rows, cols);
-        //goalPuzzle.setPuzzle(rows, cols);
         
         aStack = new Stack();
         aQueue = new Queue();
@@ -35,11 +32,6 @@ public class Tree implements Runnable {
         directions.add("left");
         directions.add("right");
         directions.add("down");
-        /*directions = new String[4];
-        directions[0] = "up";   //0
-        directions[1] = "left"; //1
-        directions[2] = "right";//2
-        directions[3] = "down";  //3*/
         
         currPuzzle.printPuzzle();
         System.out.println();
@@ -69,55 +61,65 @@ public class Tree implements Runnable {
         boolean[] effected;
         ArrayList<String> path = new ArrayList<>();
         
+        double numTests = 0.0;
+        double maxTests = 4.0;
+        double exp = 1.0;
+        
         for(int d=0; d<4; d++){
             path.add(directions.get(d));
             aQueue.enqueue(path);
             path.remove(path.size()-1);
         }
+        
         //while (!currPuzzle.isEqual(goalPuzzle)
         while (!currPuzzle.isSorted()
-            && !aQueue.isEmpty()){
-            path = aQueue.dequeue();
-            if(path.size()>0){
-                effected = currPuzzle.move(path)/*)*/; //.clone() ???
-                
-                System.out.println(path);
-                //currPuzzle.printPuzzle();
-                //System.out.println();
+            && !aQueue.isEmpty()/*
+            && !(maxTests > 500000)*/){
             
-                //if(currPuzzle.isEqual(goalPuzzle)){
-                if(currPuzzle.isSorted()){
-                    System.out.println("oooopaaaaa");
-                    currPuzzle.printPuzzle();
-                    return path;
+            path = aQueue.dequeue();
+            
+            effected = currPuzzle.move(path)/*)*/; //.clone() ???
+            
+            //System.out.println(path);
+            //currPuzzle.printPuzzle();
+            //System.out.println();
+        
+            //if(currPuzzle.isEqual(goalPuzzle)){
+            if(currPuzzle.isSorted()){
+                System.out.println("oooopaaaaa");
+                currPuzzle.printPuzzle();
+                return path;
+            }
+            else{
+                for(int d=0; d<path.size(); d++){
+                    if(!effected[d])
+                        path.remove(d);
                 }
-                else{
-                    for(int d=0; d<path.size(); d++){
-                        if(!effected[d])
-                            path.remove(d);
-                    }
-                    for(int d=0; d<4; d++){
-                        if(path.size()>0){
-                            if(!path.get(path.size()-1).equals(directions.get(3-d))){
-                                path.add(directions.get(d));
-                                aQueue.enqueue(path);
-                                path.remove(path.size()-1);
-                            }
+                
+                
+                if(numTests >= maxTests){
+                    maxTests = Math.pow(4, exp++);
+                    numTests = 0;
+                    System.out.println(maxTests);
+                }
+                if(numTests < maxTests){
+                numTests++;
+                
+                
+                for(int d=0; d<4; d++){
+                    if(path.size()>0){
+                        if(!path.get(path.size()-1).equals(directions.get(3-d))){
+                            path.add(directions.get(d));
+                            aQueue.enqueue(path);
+                            path.remove(path.size()-1);
                         }
                     }
-                    currPuzzle = initPuzzle.clonePuzzle();
                 }
-            }
-            else{//path.size() == 0
-                /*for(int d=0; d<4; d++){
-                    path.add(directions.get(d));
-                    aQueue.enqueue(path);
-                    path.remove(path.size()-1);
-                }*/
+                }
+                currPuzzle = initPuzzle.clonePuzzle();
             }
         }
         currPuzzle.printPuzzle();
-        //return false;
         return path;
     }
     

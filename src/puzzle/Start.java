@@ -46,12 +46,11 @@ public class Start {
         //System.out.println("$"+saida.get(0)+"$");
         //System.out.println("#"+saida+"#");
         
-        Tree tree = new Tree(2, 3);
+        Tree tree = new Tree(3, 3);
         System.out.println(
                 tree.breadthSearch()
         );
-                
-        
+        //System.out.println(Math.pow(4,2));
         
         //Tree runnable = new Tree();
         //Thread thread1 = new Thread(runnable);
