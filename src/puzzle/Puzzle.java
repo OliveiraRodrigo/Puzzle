@@ -1,5 +1,6 @@
 package puzzle;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -12,7 +13,7 @@ public class Puzzle {
     private final int numRows;
     private final int numCols;
     private final int numPieces;
-    private final int puzzle[][];
+    protected final int puzzle[][];
     private final ArrayList<Integer> pieces;
     
     public Puzzle(int rows, int cols){
@@ -127,6 +128,21 @@ public class Puzzle {
             }
             System.out.println();
         }
+    }
+    
+    public Color[][] showPuzzle(){
+        Color[][] matrix = new Color[numRows][numCols];
+        for (int i=0; i<numRows; i++) {
+            for (int j=0; j<numCols; j++) {
+                if(puzzle[i][j] == 0){
+                    matrix[i][j] = Color.BLACK;
+                }
+                else{
+                    matrix[i][j] = Color.BLUE;
+                }
+            }
+        }
+        return matrix;
     }
     
     public int[] getFreePosition(){

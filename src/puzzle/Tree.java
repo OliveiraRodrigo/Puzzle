@@ -13,6 +13,7 @@ public class Tree implements Runnable {
     Puzzle   goalPuzzle;
     Stack    aStack;
     Queue    aQueue;
+    Screen   screen;
     ArrayList<Character> directions;
     
     public Tree(Puzzle inPuzzle){
@@ -25,6 +26,7 @@ public class Tree implements Runnable {
         
         aStack = new Stack();
         aQueue = new Queue();
+        screen = new Screen(currPuzzle);
         directions = new ArrayList<>();
         directions.add('U');//0
         directions.add('L');//1
@@ -53,7 +55,8 @@ public class Tree implements Runnable {
             path = aQueue.dequeue();
             effected = currPuzzle.move(path)/*)*/; //.clone() ???
             
-            System.out.println(path);
+            //System.out.println(path);
+            screen.render(currPuzzle);
         
             //if(currPuzzle.isEqual(goalPuzzle)){
             if(currPuzzle.isSorted()){
