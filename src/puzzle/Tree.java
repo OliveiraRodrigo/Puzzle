@@ -13,21 +13,15 @@ public class Tree implements Runnable {
     
     Puzzle   initPuzzle;
     Puzzle   currPuzzle;
-    Puzzle   goalPuzzle;
     Stack    aStack;
     Queue    aQueue;
     Screen   screen;
     ArrayList<Character> directions;
-    //boolean  next;
     
     public Tree(Puzzle inPuzzle){
         
         initPuzzle = inPuzzle.clonePuzzle();
         currPuzzle = inPuzzle.clonePuzzle();
-        goalPuzzle = new Puzzle(
-            inPuzzle.getNumRows(),
-            inPuzzle.getNumCols());
-        
         aStack = new Stack();
         aQueue = new Queue();
         directions = new ArrayList<>();
@@ -35,7 +29,6 @@ public class Tree implements Runnable {
         directions.add('L');//1
         directions.add('R');//2
         directions.add('D');//3
-        //next = false;
     }
     
     public ArrayList<Character> breadthSearch(){
@@ -79,7 +72,6 @@ public class Tree implements Runnable {
                 init = false;
             }
         
-            //if(currPuzzle.isEqual(goalPuzzle)){
             if(currPuzzle.isSorted()){
                 System.out.println("Success!");
                 return path;
@@ -114,21 +106,6 @@ public class Tree implements Runnable {
     }
     
     /*public boolean depthSearch(int maxDepth){
-        
-        if(currPuzzle.equals(goalPuzzle)){
-            return true;
-        }
-        for(int d=0; d<4; d++){
-            while(currPuzzle.move(directions[d])){
-                aStack.push(directions[d]);
-                if(currPuzzle.equals(goalPuzzle)){
-                    return true;
-                }
-            }
-            if(!"empty".equals(aStack.pop())){
-                currPuzzle.move(directions[3-d]);//inverse move
-            }
-        }
         return false;
     }*/
     

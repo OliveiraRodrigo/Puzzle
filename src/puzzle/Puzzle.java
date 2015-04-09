@@ -1,6 +1,5 @@
 package puzzle;
 
-//import javafx.scene.paint.Color;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collections;

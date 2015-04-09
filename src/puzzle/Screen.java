@@ -1,11 +1,9 @@
 package puzzle;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.Graphics2D;
-import java.awt.GraphicsEnvironment;
 import java.awt.image.BufferStrategy;
 import javax.swing.JFrame;
 /**
@@ -14,14 +12,11 @@ import javax.swing.JFrame;
  */
 public class Screen extends JFrame implements KeyListener {
     
-    private BufferStrategy bs;
-    private Color[][] matrix;
+    private final BufferStrategy bs;
     protected boolean next;
-    //private Puzzle sPuzzle;
     
     public Screen(int rows, int cols) {
         
-        //sPuzzle = inPuzzle.clonePuzzle();
         addKeyListener(this);
         this.setTitle("Slide Puzzle");
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -31,7 +26,7 @@ public class Screen extends JFrame implements KeyListener {
         //this.setMaximumSize(new Dimension(533,735));
         //this.setMinimumSize(new Dimension(371,371));
         this.setVisible(true);
-    //    this.initialize();
+        //this.initialize();
         setIgnoreRepaint(true);
         next = false;
     //}
@@ -43,14 +38,11 @@ public class Screen extends JFrame implements KeyListener {
         //render();
     }
 
-    /** Configura e atualiza o desenho dos objetos na tela */
     public void render(Puzzle qPuzzle, Color pColor) {
-        int a=54;//54
 
         Graphics2D g = (Graphics2D) bs.getDrawGraphics();
         g.clearRect(0, 0, getWidth(), getHeight());
         
-        /** Grade do jogo */
         Color numberColor;
         if(qPuzzle.isSorted()){
             numberColor = Color.BLACK;
@@ -84,44 +76,19 @@ public class Screen extends JFrame implements KeyListener {
 
         switch(evt.getKeyCode()) {
 
-            case KeyEvent.VK_SHIFT:
-                //visual = !visual;
-                break;
-            case KeyEvent.VK_NUMPAD0:
-                //desenhaGrade = !desenhaGrade;
-                break;
-            case KeyEvent.VK_ENTER:
-                //novo = true;
-                this.setVisible(false);
-                break;
-            case KeyEvent.VK_CONTROL:
-                //jogo1.pausado = !jogo1.pausado;
-                break;
             case KeyEvent.VK_ESCAPE:
                 System.exit(1);
                 break;
             case KeyEvent.VK_LEFT:
-                //jogo1.formaAtual.praEsquerda();
-                //jogo1.praLeft = true;
                 break;
             case KeyEvent.VK_UP:
-                //jogo1.formaAtual.gira();
-                //jogo1.girou = true;
                 break;
             case KeyEvent.VK_RIGHT:
-                //jogo1.formaAtual.praDireita();
-                //jogo1.praRight = true;
                 break;
             case KeyEvent.VK_DOWN:
-                //jogo1.formaAtual.praBaixo();
                 break;
             case KeyEvent.VK_SPACE:
-                //jogo1.usaTrunfo();
-                //next = true;
                 next = !next;
-                break;
-            case KeyEvent.VK_T:
-                //jogo1.trollar();
                 break;
             default:
                 break;
