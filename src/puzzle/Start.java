@@ -8,7 +8,7 @@ public class Start {
     
     public static void main(String[] args) {
         
-        Puzzle puzzle8 = new Puzzle(2, 3);
+        Puzzle puzzle8 = new Puzzle(3, 3);
         puzzle8.shufflePuzzle();
         
         Tree   tree    = new Tree(puzzle8);

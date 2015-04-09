@@ -114,6 +114,9 @@ public class Puzzle {
                 p++;
             }
         }
+        if(isSorted()){
+            shufflePuzzle();
+        }
     }
     
     public void printPuzzle(){

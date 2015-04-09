@@ -1,8 +1,5 @@
 package puzzle;
 
-import static com.sun.java.accessibility.util.AWTEventMonitor.addKeyListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -11,7 +8,7 @@ import java.util.logging.Logger;
  *
  * @author Rodrigo
  */
-public class Tree implements KeyListener, Runnable {
+public class Tree implements Runnable {
     
     Puzzle   initPuzzle;
     Puzzle   currPuzzle;
@@ -32,13 +29,11 @@ public class Tree implements KeyListener, Runnable {
         
         aStack = new Stack();
         aQueue = new Queue();
-        //screen = new Screen();
         directions = new ArrayList<>();
         directions.add('U');//0
         directions.add('L');//1
         directions.add('R');//2
         directions.add('D');//3
-        addKeyListener(this);
         next = false;
     }
     
@@ -57,14 +52,23 @@ public class Tree implements KeyListener, Runnable {
             path.remove(path.size()-1);
         }
         
+        int min = 0;
         while (!currPuzzle.isSorted()
             && !aQueue.isEmpty()){
             
-            path = aQueue.dequeue();
-            effected = currPuzzle.move(path)/*)*/; //.clone() ???
+            if((path.size()) > min){
+                min = path.size();
+                System.out.println(min);
+            }
+            do{
+                path = aQueue.dequeue();
+            }
+            while(path.size() < min);
+            effected = currPuzzle.move(path);
             
+            //System.out.print(path.size()+" - ");
             //System.out.println(path);
-            //screen.render(currPuzzle);
+            screen.render(currPuzzle);
         
             //if(currPuzzle.isEqual(goalPuzzle)){
             if(currPuzzle.isSorted()){
@@ -76,24 +80,24 @@ public class Tree implements KeyListener, Runnable {
                     if(!effected[d])
                         path.remove(d);
                 }
-                if(numTests >= maxTests){
-                    maxTests = Math.pow(4, ++exp) - Math.pow(4, exp-1);
-                    numTests = 0;
-                }
-                else{
-                    numTests++;
+                //if(numTests >= maxTests){
+                //    maxTests = Math.pow(4, ++exp) - Math.pow(4, exp-1);
+                //    numTests = 0;
+                //}
+                //else{
+                //    numTests++;
                     for(int d=0; d<4; d++){
                         if(path.size()>0){
                             if(!path.get(path.size()-1).equals(directions.get(3-d))){
                                 //if not reverse move
                                 path.add(directions.get(d));
-                                if(path.size() > exp)
+                                if(path.size() >= min)
                                     aQueue.enqueue(path);
                                 path.remove(path.size()-1);
                             }
                         }
                     }
-                }
+                //}
                 currPuzzle = initPuzzle.clonePuzzle();
             }
         }
@@ -146,62 +150,4 @@ public class Tree implements KeyListener, Runnable {
             //timer();
         }
     }
-    
-    @Override
-    public void keyPressed(KeyEvent evt) {
-
-        switch(evt.getKeyCode()) {
-
-            case KeyEvent.VK_SHIFT:
-                //visual = !visual;
-                break;
-            case KeyEvent.VK_NUMPAD0:
-                //desenhaGrade = !desenhaGrade;
-                break;
-            case KeyEvent.VK_ENTER:
-                //novo = true;
-                //this.setVisible(false);
-                break;
-            case KeyEvent.VK_CONTROL:
-                //jogo1.pausado = !jogo1.pausado;
-                break;
-            case KeyEvent.VK_ESCAPE:
-                System.exit(1);
-                break;
-            case KeyEvent.VK_LEFT:
-                //jogo1.formaAtual.praEsquerda();
-                //jogo1.praLeft = true;
-                break;
-            case KeyEvent.VK_UP:
-                //jogo1.formaAtual.gira();
-                //jogo1.girou = true;
-                break;
-            case KeyEvent.VK_RIGHT:
-                //jogo1.formaAtual.praDireita();
-                //jogo1.praRight = true;
-                break;
-            case KeyEvent.VK_DOWN:
-                //jogo1.formaAtual.praBaixo();
-                break;
-            case KeyEvent.VK_SPACE:
-                //jogo1.usaTrunfo();
-                next = true;
-                System.out.println("qwe");
-                break;
-            case KeyEvent.VK_T:
-                //jogo1.trollar();
-                break;
-            default:
-                break;
-        }
-    }
-
-    @Override
-    public void keyTyped(KeyEvent e) {
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
-    }
-    
 }
