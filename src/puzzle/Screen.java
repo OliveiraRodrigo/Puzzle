@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.Graphics2D;
+import java.awt.GraphicsEnvironment;
 import java.awt.image.BufferStrategy;
 import javax.swing.JFrame;
 /**
@@ -18,15 +19,15 @@ public class Screen extends JFrame implements KeyListener {
     protected boolean next;
     //private Puzzle sPuzzle;
     
-    public Screen() {
+    public Screen(int rows, int cols) {
         
         //sPuzzle = inPuzzle.clonePuzzle();
         addKeyListener(this);
         this.setTitle("Slide Puzzle");
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         //this.setExtendedState(Jogo.MAXIMIZED_BOTH); //frame maximizado
-        this.setSize(500,500);
-        this.setLocation(440, 0);
+        this.setSize(100*(1 + cols),100*(1 + rows));
+        this.setLocation(800-cols*100, 100);
         //this.setMaximumSize(new Dimension(533,735));
         //this.setMinimumSize(new Dimension(371,371));
         this.setVisible(true);
@@ -43,7 +44,7 @@ public class Screen extends JFrame implements KeyListener {
     }
 
     /** Configura e atualiza o desenho dos objetos na tela */
-    public void render(Puzzle qPuzzle) {
+    public void render(Puzzle qPuzzle, Color pColor) {
         int a=54;//54
 
         Graphics2D g = (Graphics2D) bs.getDrawGraphics();
@@ -55,21 +56,22 @@ public class Screen extends JFrame implements KeyListener {
             numberColor = Color.BLACK;
         }
         else{
-            numberColor = Color.WHITE;
+            numberColor = Color.BLACK;
         }
         for(int i=0; i<qPuzzle.getNumRows(); i++) {
             for(int j=0; j<qPuzzle.getNumCols(); j++) {
 
-                g.setColor(qPuzzle.showPuzzle()[i][j]);
-                g.fill3DRect((j*100)+100,(i*100)+100, 100, 100, true);
-                g.setColor(Color.BLACK);
+                g.setColor(qPuzzle.showPuzzle(pColor)[i][j]);
+                g.fill3DRect((j*100)+51,(i*100)+63, 100, 100, true);
+                g.draw3DRect((j*100)+56,(i*100)+68, 90, 90, true);
+                g.setColor(numberColor);
                 if(qPuzzle.puzzle[i][j] != 0){
                     g.drawString(Integer.toString(
                         qPuzzle.puzzle[i][j]),
-                        (j*100)+150, (i*100)+150);
+                        (j*100)+98, (i*100)+117);
                 }
-                g.setColor(Color.darkGray);
-                g.draw3DRect((j*100)+100,(i*100)+100, 100, 100, true);
+                g.setColor(Color.lightGray);
+                g.draw3DRect((j*100)+51,(i*100)+63, 100, 100, true);
             }
         }
         

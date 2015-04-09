@@ -1,5 +1,6 @@
 package puzzle;
 
+//import javafx.scene.paint.Color;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -133,13 +134,9 @@ public class Puzzle {
         }
     }
     
-    public Color[][] showPuzzle(){
-        Color boxColor;
+    public Color[][] showPuzzle(Color boxColor){
         if(this.isSorted()){
             boxColor = Color.GREEN;
-        }
-        else{
-            boxColor = Color.BLUE;
         }
         Color[][] matrix = new Color[numRows][numCols];
         for (int i=0; i<numRows; i++) {

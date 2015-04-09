@@ -3,6 +3,7 @@ package puzzle;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.awt.Color;
 
 /**
  *
@@ -68,7 +69,8 @@ public class Tree implements Runnable {
             
             //System.out.print(path.size()+" - ");
             //System.out.println(path);
-            screen.render(currPuzzle);
+            //screen.render(currPuzzle);
+            screen.render(initPuzzle, Color.GRAY);
         
             //if(currPuzzle.isEqual(goalPuzzle)){
             if(currPuzzle.isSorted()){
@@ -130,10 +132,12 @@ public class Tree implements Runnable {
         //currPuzzle.move(this.breadthSearch());
         //currPuzzle.printPuzzle();
         
-        screen = new Screen();
-        screen.render(currPuzzle);
+        screen = new Screen(initPuzzle.getNumRows(), initPuzzle.getNumCols());
+        screen.render(currPuzzle, Color.darkGray);
         ArrayList<Character> path = new ArrayList<>();
         path.addAll(this.breadthSearch());
+        initPuzzle.printPuzzle();
+        System.out.println();
         currPuzzle.printPuzzle();
         for(int d=0; d<path.size(); d++){
             while(!screen.next){
@@ -142,10 +146,10 @@ public class Tree implements Runnable {
                 } catch (InterruptedException ex) {
                     Logger.getLogger(Tree.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                screen.render(initPuzzle);
+                screen.render(initPuzzle, Color.orange);
             }
             initPuzzle.move(path.get(d));
-            screen.render(initPuzzle);
+            screen.render(initPuzzle, Color.orange);
             screen.next = false;
             //timer();
         }
