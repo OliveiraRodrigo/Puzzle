@@ -117,7 +117,8 @@ public class Screen extends JFrame implements KeyListener {
                 break;
             case KeyEvent.VK_SPACE:
                 //jogo1.usaTrunfo();
-                next = true;
+                //next = true;
+                next = !next;
                 break;
             case KeyEvent.VK_T:
                 //jogo1.trollar();

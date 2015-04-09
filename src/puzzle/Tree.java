@@ -18,7 +18,7 @@ public class Tree implements Runnable {
     Queue    aQueue;
     Screen   screen;
     ArrayList<Character> directions;
-    boolean  next;
+    //boolean  next;
     
     public Tree(Puzzle inPuzzle){
         
@@ -35,12 +35,13 @@ public class Tree implements Runnable {
         directions.add('L');//1
         directions.add('R');//2
         directions.add('D');//3
-        next = false;
+        //next = false;
     }
     
     public ArrayList<Character> breadthSearch(){
         
         boolean[] effected;
+        boolean init = true;
         ArrayList<Character> path = new ArrayList<>();
         
         double numTests = 0.0;
@@ -70,7 +71,13 @@ public class Tree implements Runnable {
             //System.out.print(path.size()+" - ");
             //System.out.println(path);
             //screen.render(currPuzzle);
-            screen.render(initPuzzle, Color.GRAY);
+            if(init){
+                screen.render(initPuzzle, Color.GRAY);
+            }
+            if(screen.next){
+                screen.render(currPuzzle, Color.GRAY);
+                init = false;
+            }
         
             //if(currPuzzle.isEqual(goalPuzzle)){
             if(currPuzzle.isSorted()){
