@@ -8,28 +8,28 @@ import java.util.ArrayList;
  */
 public class Stack {
     
-    private final ArrayList<Character> stack;
+    private final ArrayList<Puzzle> stack;
     private int stPointer;
     
     public Stack(){
         stPointer = 0;
         stack = new ArrayList<>();
-        stack.add(' ');
+        stack.add(new Puzzle(1,1));
     }
     
-    public boolean push(char direction){
+    public boolean push(Puzzle state){
         stPointer++;
-        stack.add(direction);
+        stack.add(state);
         return true;
     }
     
-    public char pop(){
-        char direction;
+    public Puzzle pop(){
+        Puzzle state;
         if(stPointer > 0){
-            direction = stack.get(stPointer);
+            state = stack.get(stPointer);
             stack.remove(stPointer);
             stPointer--;
-            return direction;
+            return state;
         }
         return stack.get(0);
     }

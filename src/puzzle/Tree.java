@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.awt.Color;
+import java.util.Random;
 
 /**
  *
@@ -36,10 +37,12 @@ public class Tree implements Runnable {
         boolean[] effected;
         boolean init = true;
         ArrayList<Character> path = new ArrayList<>();
+        initPuzzle.setBackTracking(false);
+        currPuzzle.setBackTracking(false);
         
-        double numTests = 0.0;
-        double maxTests = 4.0;
-        double exp = 1.0;
+        //double numTests = 0.0;
+        //double maxTests = 4.0;
+        //double exp = 1.0;
         
         for(int d=0; d<4; d++){
             path.add(directions.get(d));
@@ -105,9 +108,96 @@ public class Tree implements Runnable {
         return path;
     }
     
-    /*public boolean depthSearch(int maxDepth){
-        return false;
-    }*/
+    public ArrayList<Character> depthSearch(){
+        
+        boolean effected;
+        boolean init = true;
+        ArrayList<Character> path = new ArrayList<>();
+        initPuzzle.setBackTracking(true);
+        currPuzzle.setBackTracking(true);
+        int level = 0;
+        final int maxLevel = 15;
+        
+        aStack.push(initPuzzle);
+        level++;
+        
+        while (!currPuzzle.isSorted()
+            && !aStack.isEmpty()){
+System.out.println("--1--");
+            currPuzzle = aStack.pop();
+            level--;
+            
+            boolean[] dir = new boolean[4];
+            for(int i=0; i<4; i++){
+                dir[i] = false;
+            }
+            for(int i=0; i<4; i++){
+                int r;
+                do{
+                    r = new Random().nextInt(4);
+                }
+                while(dir[r]);
+                dir[r] = true;
+                
+                //if(path.size()>0){
+                //if(!path.get(path.size()-1).equals(directions.get(3-r))){
+                if(!currPuzzle.nextMove[r]){
+System.out.println("--2--");
+                    if(currPuzzle.move(directions.get(r))){
+System.out.println("--3--");
+                        if(init){
+                            screen.render(initPuzzle, Color.GRAY);
+                        }
+                        if(screen.next){
+                            screen.render(currPuzzle, Color.GRAY);
+                            init = false;
+                        }
+                        
+                //if(path.size()>0){
+                //if(!path.get(path.size()-1).equals(directions.get(3-r))){
+                        path.add(directions.get(r));
+                        System.out.println(path);
+                //}
+                //}
+                        if(currPuzzle.isSorted()){
+                            return path;
+                        }
+                        else{
+                            if(level < maxLevel){
+System.out.println("--4--");
+                                aStack.push(currPuzzle);
+                                level++;
+                            }
+System.out.println("--4.5--");
+                            break;
+                        }
+                    }
+                    else{
+System.out.println("--5--");
+System.out.println("****"+r+"****");
+                        currPuzzle.nextMove[r] = true;
+                        currPuzzle = currPuzzle.parentPuzzle;
+                        if(path.size()>0)
+                            path.remove(path.size()-1);
+                    }
+                }
+                else{
+System.out.println("--6--");
+                    if(i==3){
+System.out.println("--7--");
+                        currPuzzle = currPuzzle.parentPuzzle;
+                        if(path.size()>0)
+                            path.remove(path.size()-1);
+                        level--;
+                    }
+                }
+                //}
+                //}
+            }
+        }
+        
+        return path;
+    }
     
     @Override
     public void run() {
@@ -120,6 +210,7 @@ public class Tree implements Runnable {
         screen.render(currPuzzle, Color.darkGray);
         ArrayList<Character> path = new ArrayList<>();
         path.addAll(this.breadthSearch());
+        //path.addAll(this.depthSearch());
         initPuzzle.printPuzzle();
         System.out.println();
         currPuzzle.printPuzzle();

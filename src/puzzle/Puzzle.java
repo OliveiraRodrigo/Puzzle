@@ -15,9 +15,13 @@ public class Puzzle {
     private final int numPieces;
     protected final int puzzle[][];
     private final ArrayList<Integer> pieces;
+    private boolean backTracking;
+    protected Puzzle parentPuzzle;
+    protected boolean[] nextMove;
     
     public Puzzle(int rows, int cols){
         
+        backTracking = false;
         numRows = rows;
         numCols = cols;
                     //digitar quantidades em campos na tela
@@ -25,8 +29,13 @@ public class Puzzle {
         numPieces = numRows * numCols;
                     //a peca zero sera a posicao vazia
         
-        puzzle = new int[numRows][numCols];
-        pieces = new ArrayList<>();
+        puzzle   = new int[numRows][numCols];
+        pieces   = new ArrayList<>();
+        nextMove = new boolean[4];
+        
+        for(int n=0; n<4; n++){
+            nextMove[n] = false;//0=U, 1=L, 2=R, 3=D}
+        }
         
         int p = 0;
         for(int r=0; r<numRows; r++){
@@ -50,13 +59,19 @@ public class Puzzle {
         return puzzle.clone();
     }
     
+    public void setBackTracking(boolean bt){
+        backTracking = bt;
+    }
+    
     public Puzzle clonePuzzle(){
         Puzzle clone = new Puzzle(numRows, numCols);
         for(int r=0; r<numRows; r++){
             for(int c=0; c<numCols; c++){
-                clone.puzzle[r][c] = puzzle[r][c];
+                clone.puzzle[r][c] = this.puzzle[r][c];
             }
         }
+        clone.parentPuzzle = this.parentPuzzle;
+        clone.nextMove = this.nextMove.clone();
         return clone;
     }
     
@@ -169,6 +184,7 @@ public class Puzzle {
     
     public boolean move(char direction){
         int r, c;
+        parentPuzzle = this.clonePuzzle();
         r = getFreePosition()[0];
         c = getFreePosition()[1];
         switch (direction){
@@ -177,6 +193,9 @@ public class Puzzle {
                 if(r+1 < numRows){
                     puzzle[r]  [c] = puzzle[r+1][c];
                     puzzle[r+1][c] = 0;
+                    if(backTracking){
+                        parentPuzzle.nextMove[0] = true;
+                    }
                     return true;
                 }
                 return false;
@@ -184,6 +203,9 @@ public class Puzzle {
                 if(r-1 >= 0){
                     puzzle[r]  [c] = puzzle[r-1][c];
                     puzzle[r-1][c] = 0;
+                    if(backTracking){
+                        parentPuzzle.nextMove[3] = true;
+                    }
                     return true;
                 }
                 return false;
@@ -191,6 +213,9 @@ public class Puzzle {
                 if(c+1 < numCols){
                     puzzle[r][c]   = puzzle[r][c+1];
                     puzzle[r][c+1] = 0;
+                    if(backTracking){
+                        parentPuzzle.nextMove[1] = true;
+                    }
                     return true;
                 }
                 return false;
@@ -198,6 +223,9 @@ public class Puzzle {
                 if(c-1 >= 0){
                     puzzle[r][c]   = puzzle[r][c-1];
                     puzzle[r][c-1] = 0;
+                    if(backTracking){
+                        parentPuzzle.nextMove[2] = true;
+                    }
                     return true;
                 }
                 return false;
