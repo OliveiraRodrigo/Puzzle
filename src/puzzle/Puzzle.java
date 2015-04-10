@@ -70,8 +70,11 @@ public class Puzzle {
                 clone.puzzle[r][c] = this.puzzle[r][c];
             }
         }
-        clone.parentPuzzle = this.parentPuzzle;
-        clone.nextMove = this.nextMove.clone();
+        if(backTracking){
+            clone.setBackTracking(true);
+            clone.parentPuzzle = this.parentPuzzle;
+            clone.nextMove = this.nextMove.clone();
+        }
         return clone;
     }
     

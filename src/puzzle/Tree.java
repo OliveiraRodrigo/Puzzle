@@ -116,16 +116,16 @@ public class Tree implements Runnable {
         initPuzzle.setBackTracking(true);
         currPuzzle.setBackTracking(true);
         int level = 0;
-        final int maxLevel = 15;
+        final int maxLevel = 22;
         
         aStack.push(initPuzzle);
-        level++;
         
         while (!currPuzzle.isSorted()
             && !aStack.isEmpty()){
 System.out.println("--1--");
             currPuzzle = aStack.pop();
-            level--;
+            //level--;
+            //if(!aStack.isEmpty()){
             
             boolean[] dir = new boolean[4];
             for(int i=0; i<4; i++){
@@ -135,6 +135,7 @@ System.out.println("--1--");
                 int r;
                 do{
                     r = new Random().nextInt(4);
+System.out.println("--"+directions.get(r)+"--");
                 }
                 while(dir[r]);
                 dir[r] = true;
@@ -142,7 +143,7 @@ System.out.println("--1--");
                 //if(path.size()>0){
                 //if(!path.get(path.size()-1).equals(directions.get(3-r))){
                 if(!currPuzzle.nextMove[r]){
-System.out.println("--2--");
+//System.out.println("--2--");
                     if(currPuzzle.move(directions.get(r))){
 System.out.println("--3--");
                         if(init){
@@ -155,47 +156,60 @@ System.out.println("--3--");
                         
                 //if(path.size()>0){
                 //if(!path.get(path.size()-1).equals(directions.get(3-r))){
+                        level++;
                         path.add(directions.get(r));
                         System.out.println(path);
                 //}
                 //}
                         if(currPuzzle.isSorted()){
+System.out.println("--98--");
                             return path;
                         }
                         else{
                             if(level < maxLevel){
-System.out.println("--4--");
+//System.out.println("--4--");
                                 aStack.push(currPuzzle);
-                                level++;
                             }
-System.out.println("--4.5--");
+                            else{
+                                currPuzzle = currPuzzle.parentPuzzle;
+                                //aStack.push(currPuzzle);                                
+                                //if(path.size()>0)
+                                //    path.remove(path.size()-1);
+                                level--;
+                            }
+//System.out.println("--4.5--");
                             break;
                         }
                     }
                     else{
-System.out.println("--5--");
-System.out.println("****"+r+"****");
+//System.out.println("--5--");
+//System.out.println("****"+r+"****");
                         currPuzzle.nextMove[r] = true;
-                        currPuzzle = currPuzzle.parentPuzzle;
-                        if(path.size()>0)
-                            path.remove(path.size()-1);
+                        //currPuzzle = currPuzzle.parentPuzzle;
+                        //if(path.size()>0)
+                        //    path.remove(path.size()-1);
+                        //level--;
                     }
                 }
                 else{
-System.out.println("--6--");
+//System.out.println("--6--");
                     if(i==3){
-System.out.println("--7--");
+//System.out.println("--7--");
                         currPuzzle = currPuzzle.parentPuzzle;
                         if(path.size()>0)
                             path.remove(path.size()-1);
                         level--;
                     }
+                    else{
+                        //aStack.push(currPuzzle);
+                    }
                 }
                 //}
                 //}
             }
+            //}
         }
-        
+System.out.println("--99--");
         return path;
     }
     
@@ -207,10 +221,10 @@ System.out.println("--7--");
         //currPuzzle.printPuzzle();
         
         screen = new Screen(initPuzzle.getNumRows(), initPuzzle.getNumCols());
-        screen.render(currPuzzle, Color.darkGray);
+        screen.render(currPuzzle, Color.GRAY);
         ArrayList<Character> path = new ArrayList<>();
-        path.addAll(this.breadthSearch());
-        //path.addAll(this.depthSearch());
+        //path.addAll(this.breadthSearch());
+        path.addAll(this.depthSearch());
         initPuzzle.printPuzzle();
         System.out.println();
         currPuzzle.printPuzzle();
