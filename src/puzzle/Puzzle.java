@@ -10,18 +10,17 @@ import java.util.Collections;
  */
 public class Puzzle {
     
-    private final int numRows;
-    private final int numCols;
-    private final int numPieces;
+    private   final int numRows;
+    private   final int numCols;
+    private   final int numPieces;
     protected final int puzzle[][];
-    private final ArrayList<Integer> pieces;
-    private boolean backTracking;
-    protected Puzzle parentPuzzle;
-    protected boolean[] nextMove;
+    private   final ArrayList<Integer> pieces;
+    private         boolean   backTracking;
+    protected       Puzzle    parentPuzzle;
+    protected       boolean[] nextMove;
     
     public Puzzle(int rows, int cols){
         
-        backTracking = false;
         numRows = rows;
         numCols = cols;
                     //digitar quantidades em campos na tela
@@ -31,11 +30,6 @@ public class Puzzle {
         
         puzzle   = new int[numRows][numCols];
         pieces   = new ArrayList<>();
-        nextMove = new boolean[4];
-        
-        for(int n=0; n<4; n++){
-            nextMove[n] = false;//0=U, 1=L, 2=R, 3=D}
-        }
         
         int p = 0;
         for(int r=0; r<numRows; r++){
@@ -45,6 +39,7 @@ public class Puzzle {
                 p++;
             }
         }
+        this.backTracking = false;
     }
     
     public int getNumRows(){
@@ -61,13 +56,22 @@ public class Puzzle {
     
     public void setBackTracking(boolean bt){
         backTracking = bt;
+        if(backTracking){
+            parentPuzzle.backTracking = true;
+            nextMove = new boolean[4];
+            for(int n=0; n<4; n++){
+                nextMove[n] = false;
+                //0=U, 1=L, 2=R, 3=D}
+            }
+        }
     }
     
     public Puzzle clonePuzzle(){
         Puzzle clone = new Puzzle(numRows, numCols);
         for(int r=0; r<numRows; r++){
             for(int c=0; c<numCols; c++){
-                clone.puzzle[r][c] = this.puzzle[r][c];
+                clone.puzzle[r][c]
+                =this.puzzle[r][c];
             }
         }
         if(backTracking){
@@ -180,12 +184,51 @@ public class Puzzle {
                 }
             }
         }
-        freePosition[0] = 0;
-        freePosition[1] = 0;
-        return freePosition;
+        return new int[]{0,0};
     }
     
+    //Sem backTracking
     public boolean move(char direction){
+        int r, c;
+        r = getFreePosition()[0];
+        c = getFreePosition()[1];
+        switch (direction){
+            
+            case 'U':
+                if(r+1 < numRows){
+                    puzzle[r]  [c] = puzzle[r+1][c];
+                    puzzle[r+1][c] = 0;
+                    return true;
+                }
+                return false;
+            case 'D':
+                if(r-1 >= 0){
+                    puzzle[r]  [c] = puzzle[r-1][c];
+                    puzzle[r-1][c] = 0;
+                    return true;
+                }
+                return false;
+            case 'L':
+                if(c+1 < numCols){
+                    puzzle[r][c]   = puzzle[r][c+1];
+                    puzzle[r][c+1] = 0;
+                    return true;
+                }
+                return false;
+            case 'R':
+                if(c-1 >= 0){
+                    puzzle[r][c]   = puzzle[r][c-1];
+                    puzzle[r][c-1] = 0;
+                    return true;
+                }
+                return false;
+            default:
+                return false;
+        }
+    }
+    
+    //Usando backTracking
+    public boolean move(char direction, char b){
         int r, c;
         parentPuzzle = this.clonePuzzle();
         r = getFreePosition()[0];
@@ -196,9 +239,7 @@ public class Puzzle {
                 if(r+1 < numRows){
                     puzzle[r]  [c] = puzzle[r+1][c];
                     puzzle[r+1][c] = 0;
-                    if(backTracking){
-                        parentPuzzle.nextMove[0] = true;
-                    }
+                    parentPuzzle.nextMove[0] = true;
                     return true;
                 }
                 return false;
@@ -206,9 +247,7 @@ public class Puzzle {
                 if(r-1 >= 0){
                     puzzle[r]  [c] = puzzle[r-1][c];
                     puzzle[r-1][c] = 0;
-                    if(backTracking){
-                        parentPuzzle.nextMove[3] = true;
-                    }
+                    parentPuzzle.nextMove[3] = true;
                     return true;
                 }
                 return false;
@@ -216,9 +255,7 @@ public class Puzzle {
                 if(c+1 < numCols){
                     puzzle[r][c]   = puzzle[r][c+1];
                     puzzle[r][c+1] = 0;
-                    if(backTracking){
-                        parentPuzzle.nextMove[1] = true;
-                    }
+                    parentPuzzle.nextMove[1] = true;
                     return true;
                 }
                 return false;
@@ -226,9 +263,7 @@ public class Puzzle {
                 if(c-1 >= 0){
                     puzzle[r][c]   = puzzle[r][c-1];
                     puzzle[r][c-1] = 0;
-                    if(backTracking){
-                        parentPuzzle.nextMove[2] = true;
-                    }
+                    parentPuzzle.nextMove[2] = true;
                     return true;
                 }
                 return false;
@@ -236,7 +271,6 @@ public class Puzzle {
                 return false;
         }
     }
-    
     public boolean[] move(ArrayList<Character> directions){
         int size;
         size = directions.size();

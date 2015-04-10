@@ -34,6 +34,10 @@ public class Stack {
         return stack.get(0);
     }
     
+    public Puzzle getTop(){
+        return stack.get(stPointer);
+    }
+    
     public boolean isEmpty(){
         if(stPointer == 0){
             return true;
