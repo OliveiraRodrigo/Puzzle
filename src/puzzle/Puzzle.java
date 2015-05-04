@@ -57,7 +57,7 @@ public class Puzzle {
     public void setBackTracking(boolean bt){
         backTracking = bt;
         if(backTracking){
-            parentPuzzle.backTracking = true;
+            //parentPuzzle.backTracking = true;
             nextMove = new boolean[4];
             for(int n=0; n<4; n++){
                 nextMove[n] = false;
@@ -271,6 +271,7 @@ public class Puzzle {
                 return false;
         }
     }
+    
     public boolean[] move(ArrayList<Character> directions){
         int size;
         size = directions.size();

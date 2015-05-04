@@ -12,7 +12,8 @@ import java.util.Random;
  */
 public class Tree implements Runnable {
     
-    private final Puzzle initPuzzle;
+    private       Puzzle inputPuzzle;
+    private       Puzzle initPuzzle;
     private       Puzzle currPuzzle;
     private final Stack  aStack;
     private final Queue  aQueue;
@@ -22,7 +23,8 @@ public class Tree implements Runnable {
     public Tree(Puzzle inPuzzle){
         
         initPuzzle   = inPuzzle.clonePuzzle();
-        currPuzzle   = inPuzzle.clonePuzzle();
+        inputPuzzle  = inPuzzle.clonePuzzle();
+        //currPuzzle   = inPuzzle.clonePuzzle();
         aStack       = new Stack();
         aQueue       = new Queue();
         directions   = new ArrayList<>();
@@ -35,7 +37,9 @@ public class Tree implements Runnable {
     public ArrayList<Character> breadthSearch(){
         
         boolean[] effected;
+        boolean[] buttons = new boolean[2];
         boolean init = true;
+        int counter = 0;
         ArrayList<Character> path = new ArrayList<>();
         initPuzzle.setBackTracking(false);
         currPuzzle.setBackTracking(false);
@@ -59,20 +63,28 @@ public class Tree implements Runnable {
             }
             while(path.size() < min);
             effected = currPuzzle.move(path);
+            counter++;
             
             //System.out.println(path);
             if(init){
-                screen.render(initPuzzle, Color.GRAY);
+                buttons = screen.render(counter, initPuzzle, initPuzzle, Color.lightGray);
             }
             if(screen.next){
-                screen.render(currPuzzle, Color.GRAY);
+                buttons = screen.render(counter, initPuzzle, currPuzzle, Color.lightGray);
                 init = false;
+            }
+            
+            if(!buttons[0]){
+                counter = 0;
+                return path;
             }
         
             if(currPuzzle.isSorted()){
                 if(path.size()>min)
                     System.out.println(path.size());
+                System.out.println("Tested States: "+counter);
                 System.out.println("Success!");
+                screen.render(counter, initPuzzle, currPuzzle, Color.orange);
                 return path;
             }
             else{
@@ -94,6 +106,7 @@ public class Tree implements Runnable {
                 currPuzzle = initPuzzle.clonePuzzle();
             }
         }
+        counter = 0;
         return path;
     }
     
@@ -133,13 +146,13 @@ public class Tree implements Runnable {
 System.out.println(directions.get(r)+" : "+currPuzzle.nextMove[r]);
                 if(!currPuzzle.nextMove[r]){
 //System.out.println("--2--");
-                    if(currPuzzle.move(directions.get(r))){
+                    if(currPuzzle.move(directions.get(r), 'b')){
 //System.out.println("--3--");
                         if(init){
-                            screen.render(initPuzzle, Color.GRAY);
+                            screen.render(0,initPuzzle, initPuzzle, Color.lightGray);
                         }
                         if(screen.next){
-                            screen.render(currPuzzle, Color.GRAY);
+                            screen.render(0,initPuzzle, currPuzzle, Color.lightGray);
                             init = false;
                         }
                         
@@ -206,16 +219,57 @@ System.out.println(directions.get(r)+" : "+currPuzzle.nextMove[r]);
     @Override
     public void run() {
         
+        boolean[] buttons = new boolean[2];
+        Color stopColor = Color.lightGray;
         screen = new Screen(initPuzzle.getNumRows(), initPuzzle.getNumCols());
-        screen.render(currPuzzle, Color.GRAY);
-        
+        //buttons = screen.render(inputPuzzle, currPuzzle, Color.lightGray);
         ArrayList<Character> path = new ArrayList<>();
-        path.addAll(this.breadthSearch());
-        //path.addAll(this.depthSearch());
+        
+        while(true){
+            
+        //Puzzle inputPuzzle = initPuzzle.clonePuzzle();
+        //initPuzzle = inputPuzzle.clonePuzzle();
+        currPuzzle = inputPuzzle.clonePuzzle();
+        
+        while(!currPuzzle.isSorted()){
+        
+        initPuzzle = inputPuzzle.clonePuzzle();
+        currPuzzle = inputPuzzle.clonePuzzle();
+        
+        do{
+            buttons = screen.render(-1, inputPuzzle, currPuzzle, Color.lightGray);
+            screen.next = true;
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Tree.class.getName())
+                    .log(Level.SEVERE, null, ex);
+            }
+        }
+        while(!buttons[0] && !buttons[1]);
+        
+        //initPuzzle = inputPuzzle.clonePuzzle();
+        aQueue.clear();
+        path.clear();
+        if(buttons[0])
+            path.addAll(this.breadthSearch());
+        if(buttons[1])
+            path.addAll(this.depthSearch());
+        aQueue.clear();
+        //aStack.clear();
+        
+        if(currPuzzle.isSorted()){
+            stopColor = Color.orange;
+        }
+        else{
+            stopColor = Color.lightGray;
+        }
         
         initPuzzle.printPuzzle();
         System.out.println();
         currPuzzle.printPuzzle();
+        
+        }
         
         for(int d=0; d<path.size(); d++){
             while(!screen.next){
@@ -225,11 +279,26 @@ System.out.println(directions.get(r)+" : "+currPuzzle.nextMove[r]);
                     Logger.getLogger(Tree.class.getName())
                         .log(Level.SEVERE, null, ex);
                 }
-                screen.render(initPuzzle, Color.orange);
+                screen.render(-1, inputPuzzle, initPuzzle, stopColor);
             }
             initPuzzle.move(path.get(d));
-            screen.render(initPuzzle, Color.orange);
+            screen.render(-1, inputPuzzle, initPuzzle, stopColor);
             screen.next = false;
+        }
+        screen.buttons[0] = false;
+        screen.buttons[1] = false;
+        screen.next = false;
+        do{
+            buttons = screen.render(-1, inputPuzzle, initPuzzle, Color.lightGray);
+            screen.next = true;
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Tree.class.getName())
+                    .log(Level.SEVERE, null, ex);
+            }
+        }
+        while(!buttons[0] && !buttons[1]);
         }
     }
 }

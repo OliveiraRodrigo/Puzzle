@@ -44,4 +44,8 @@ public class Stack {
         }
         return false;
     }
+    public void clear(){
+        stack.clear();
+        stPointer = 0;
+    }
 }

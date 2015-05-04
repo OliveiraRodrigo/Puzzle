@@ -41,4 +41,9 @@ public class Queue {
         }
         return false;
     }
+    
+    public void clear(){
+        queue.clear();
+        qLast = 0;
+    }
 }
